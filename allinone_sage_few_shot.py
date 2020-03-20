@@ -85,7 +85,7 @@ class GraphSAGE(nn.Module):
             self.layers.append(SAGEConv(n_hidden, n_hidden, aggregator_type, feat_drop=dropout, activation=activation))
         # output layer
         self.layers.append(
-            SAGEConv(n_hidden, n_embs, aggregator_type, feat_drop=dropout, activation=F.sigmoid))  # activation None
+            SAGEConv(n_hidden, n_embs, aggregator_type, feat_drop=dropout, activation=F.relu))  # activation None
         self.fc1 = nn.Linear(401, 100)
         self.fc2 = nn.Linear(100, 1)
 

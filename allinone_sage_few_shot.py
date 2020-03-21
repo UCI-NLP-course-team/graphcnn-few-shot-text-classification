@@ -148,7 +148,13 @@ class GraphSAGE(nn.Module):
 
                 embeddings_same = embeddings_same[np.random.randint(embeddings_same.shape[0],
                                                                     size=num_pairs_each_label * 2), :]
-                diffs = np.random.randint(TRAIN_IDX, size=num_pairs_each_label)
+                if not test_sim:
+                    tsize = embeddings_diff.shape[0]
+                    dssize = int(num_pairs_each_label / 5)
+                    diffs = np.concatenate([np.random.randint(TRAIN_IDX, size=dssize),
+                                            np.random.randint(TRAIN_IDX, tsize, size=num_pairs_each_label - dssize)])
+                else:
+                    diffs = np.random.randint(embeddings_diff.shape[0], size=num_pairs_each_label)
 
                 embeddings_diff = embeddings_diff[diffs, :]
                 from_ = i * num_pairs_each_label
@@ -189,8 +195,8 @@ Gs[1] = Gs[1].to(torch.device(device))
 
 model.train()
 save_every = 10
-n_epochs = 700
-best_loss = 9
+n_epochs = 1000
+best_loss = np.inf
 
 # model.load_state_dict(torch.load('model_fs_20ng.pytorch'))
 # optimizer.load_state_dict(torch.load('optimizer_fs_20ng.pytorch'))
@@ -198,7 +204,7 @@ best_loss = 9
 for epoch in range(n_epochs):
     print('epoch', epoch)
     optimizer.zero_grad()
-    similarities, labels_sim = model(Gs[0], train_features, ally, num_pairs_each_label=20)
+    similarities, labels_sim = model(Gs[0], train_features, ally, num_pairs_each_label=50)
 
     loss = F.binary_cross_entropy(similarities, labels_sim)
     loss.backward()

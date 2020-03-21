@@ -13,20 +13,20 @@ TRAIN_IDX = 7931
 VALID_IDX = 12822
 TEST_IDX = -6024
 
-full_adj = np.load('data/ind.20ng.adj', allow_pickle=True).tocsr()
-print('data/ind.20ng.adj', full_adj.shape)
+full_adj = np.load('data/fs.ind.20ng.adj', allow_pickle=True).tocsr()
+print('data/fs.ind.20ng.adj', full_adj.shape)
 
-tx = np.load('data/ind.20ng.tx', allow_pickle=True)
-print('data/ind.20ng.tx', tx.shape)
+tx = np.load('data/fs.ind.20ng.tx', allow_pickle=True)
+print('data/fs.ind.20ng.tx', tx.shape)
 
-ty = np.load('data/ind.20ng.ty', allow_pickle=True)
-print('data/ind.20ng.ty', ty.shape)
+ty = np.load('data/fs.ind.20ng.ty', allow_pickle=True)
+print('data/fs.ind.20ng.ty', ty.shape)
 
-allx = np.load('data/ind.20ng.allx', allow_pickle=True).toarray()
-print('data/ind.20ng.allx', allx.shape)
+allx = np.load('data/fs.ind.20ng.allx', allow_pickle=True).toarray()
+print('data/fs.ind.20ng.allx', allx.shape)
 
-ally = np.load('data/ind.20ng.ally', allow_pickle=True).toarray()
-print('data/ind.20ng.ally', ally.shape)
+ally = np.load('data/fs.ind.20ng.ally', allow_pickle=True).toarray()
+print('data/fs.ind.20ng.ally', ally.shape)
 
 train_labels = np.unique(np.argmax(ally[:TRAIN_IDX], axis=1))
 print('train_labels', train_labels)
@@ -192,8 +192,8 @@ save_every = 10
 n_epochs = 700
 best_loss = 9
 
-# model.load_state_dict(torch.load('model_fs_reuters.pytorch'))
-# optimizer.load_state_dict(torch.load('optimizer_fs_reuters.pytorch'))
+# model.load_state_dict(torch.load('model_fs_20ng.pytorch'))
+# optimizer.load_state_dict(torch.load('optimizer_fs_20ng.pytorch'))
 
 for epoch in range(n_epochs):
     print('epoch', epoch)
